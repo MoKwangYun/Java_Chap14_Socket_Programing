@@ -1,0 +1,31 @@
+import java.io.*;
+import java.net.*;
+
+public class ClientEx {
+	public static void main(String[] args) {
+		Socket socket = null;
+		BufferedReader in =null;
+		
+		try {
+			socket = new Socket("localhost",9999);
+			in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+			
+			while(true) {
+				String inputMessage = in.readLine();
+				System.out.println("데이터 받기 성공");
+				if(inputMessage.equalsIgnoreCase("bye")){
+					System.out.println("클라이언트에서 연결 종료");
+					break;
+				}
+				System.out.println("클라이언트: " + inputMessage);
+			}
+			
+		}
+		catch(IOException e) {}
+		
+		try {	
+			socket.close();
+		}
+		catch(IOException e) {}
+	}
+}
